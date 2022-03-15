@@ -120,23 +120,32 @@ if __name__ == '__main__':
         print('df_info path not exist:', args.df_info)
         exit()
 
-    if args.JOB_ID < 0:
-        # JOB_NUM 만큼 subprocess 를 띄워서 실행시킨다.
-        childs = []
-        for job_id in range(args.JOB_NUM):
-            cmd = ['python'] + sys.argv[0:4]
-            cmd += ['--JOB_ID', str(job_id),
-                    '--JOB_NUM', str(args.JOB_NUM),
-                    '--gpu', str(args.gpu)]
-            p = subprocess.Popen(cmd, stdin=None)
-            childs.append(p)
-        # 자식 process가 완료되기를 기다린다.
-        _ = [p.wait() for p in childs]
-
-    else:
-        # 자식 process 이므로, 실제 작업을 진행한다.
+    if args.JOB_NUM == 1:
+        print('current process')
+        # JOB_NUM 이 1이면 직접한다.
+        args.JOB_ID = 0
         args.gpu = args.gpu.split(',')
         args.GPU_NUM = len(args.gpu)
         print(sys.argv)
         main(args)
+    else:
+        if args.JOB_ID < 0:
+            # JOB_NUM 만큼 subprocess 를 띄워서 실행시킨다.
+            childs = []
+            for job_id in range(args.JOB_NUM):
+                cmd = ['python'] + sys.argv[0:4]
+                cmd += ['--JOB_ID', str(job_id),
+                        '--JOB_NUM', str(args.JOB_NUM),
+                        '--gpu', str(args.gpu)]
+                p = subprocess.Popen(cmd, stdin=None)
+                childs.append(p)
+            # 자식 process가 완료되기를 기다린다.
+            _ = [p.wait() for p in childs]
+
+        else:
+            # 자식 process 이므로, 실제 작업을 진행한다.
+            args.gpu = args.gpu.split(',')
+            args.GPU_NUM = len(args.gpu)
+            print(sys.argv)
+            main(args)
 
