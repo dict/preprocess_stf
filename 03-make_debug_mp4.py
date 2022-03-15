@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 def main(args):
     verbose = True
-    mp4s = sorted(glob(os.path.join(args.video_root, '*/*')))
+    mp4s = sorted(glob(os.path.join(args.video_root, '*/*'), recursive=True))
     mp4s += sorted(glob(os.path.join(args.video_root, '*')))
     mp4s = [f for f in mp4s if os.path.isfile(f)]
     mp4s = {Path(e).stem:e for e in mp4s}
