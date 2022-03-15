@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 def main(args):
-    audios = sorted(glob(os.path.join(args.crop_root, '*/audio.pickle')))
+    audios = sorted(glob(os.path.join(args.crop_root, '*/audio.wav')))
     print('audio len:', len(audios))
 
     print('make mels')
