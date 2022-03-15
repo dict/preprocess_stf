@@ -14,6 +14,7 @@ from moviepy.editor import AudioFileClip, ImageSequenceClip
 from . import face_finder as ff
 import face_alignment
 import imageio_ffmpeg
+import os
 #from stf.util import callback_inter
 
 
@@ -55,6 +56,7 @@ def fan_box(pred, img, type3d):
     x1 = max(0, x1)
     x2 = min(img.shape[1], x2)
     return (x1, y1, x2, y2)
+    
     
 def face_detect_fan_(img, type3d):
     global g_detector_fan
@@ -434,7 +436,7 @@ def save_crop_info2(anchor_box_path, mp4_path, out_dir, make_mp4=False,
     df.to_pickle(pickle_path)
     with open(pickle_path.replace('.pickle', '.txt'), 'w') as f:
         f.write('success')
-    
+
     try:
         min_idx = min(df['frame_idx'].values)
         max_idx = max(df['frame_idx'].values)
@@ -486,13 +488,15 @@ def save_debug_clip2(clip, fps, verbose=False):
         #audio_clip = AudioFileClip(f'{clip}/audio_debug.wav')
         ffmpeg_params=['-acodec', 'aac', '-preset', 'veryslow', '-crf', '17']
         if writer is None:
+            audio_path = f'{clip}/audio_debug.wav'
+            audio_path = audio_path if os.path.exists(audio_path) else None
             writer = imageio_ffmpeg.write_frames(save_path,
                                                  size = [merged.shape[1], merged.shape[0]],
                                                  fps=fps,
                                                  ffmpeg_log_level='error',
                                                  quality = 10, # 0~10
                                                  output_params=ffmpeg_params,
-                                                 audio_path=f'{clip}/audio_debug.wav')
+                                                 audio_path=audio_path)
             writer.send(None)  # seed the generator
         writer.send(merged)
     writer.close()
