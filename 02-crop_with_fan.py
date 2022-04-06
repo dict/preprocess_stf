@@ -61,9 +61,10 @@ def main(args):
     anchors = sorted(anchors)
     errors = []
     pass_files = []
-    for i, (name, df_path) in enumerate(tqdm(anchors)):
+    for i, (name, df_path) in enumerate(anchors):
         if i % args.JOB_NUM != args.JOB_ID:
             continue
+        log(f'# {name}/{len(anchors)}, {int(i*100/len(anchors))}% : {name}')
         
         clip_dir = Path(args.output)/Path(df_path).stem
         #if Path(f'{clip_dir}/df_fan.txt').exists():

@@ -72,7 +72,7 @@ def main(args):
     for i, mp4 in enumerate(mp4s):
         if i % args.JOB_NUM != args.JOB_ID:
             continue
-        log(f'# {i}/{len(mp4s)} : {mp4}')
+        log(f'# {i}/{len(mp4s)}, {int(i*100/len(mp4s))}% : {mp4}')
         
         pickle_path_1 = os.path.join(args.output, f'df_face_info/{Path(mp4).stem}.pickle')
         pickle_path_2 = os.path.join(args.output, f'df_anchor_i/{Path(mp4).stem}_000.pickle')

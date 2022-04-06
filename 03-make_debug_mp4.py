@@ -23,7 +23,7 @@ def main(args):
     ppys = {Path(e).parent.name:Path(e).parent for e in ppys}
     print('len cropped videos : ', len(ppys))
 
-    for i, (name, clip) in enumerate(tqdm(ppys.items())):
+    for i, (name, clip) in enumerate(ppys.items()):
         save_path = f'{clip}/debug.mp4'
         if verbose:
             print(f'{i+1}/{len(ppys)}, {save_path}')
