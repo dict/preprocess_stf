@@ -1,5 +1,5 @@
 
-root="/data/home/hyejin/dataset/hunet"
+root="/data/home/gomthing/dataset/pwb/mon_front"
 
 echo "root : "$root
 
@@ -10,7 +10,18 @@ echo "root : "$root
 # parameter
 # root : 위에 설정한 root
 # checked_csv : result.02_crop_with_fan.ipynb 에서 저장한 csv 이름과 동일하게
-python set_no_checked_video.py $root check_pwb.csv
+#python set_no_checked_video.py $root check_pwb.csv
+
+
+####################################
+# check_csv 에 'no'로 설정한 비디오에 대해서,
+#  처음, 마지막 30개frame 을 no 로 변경함
+# 맨 앞과 뒤에만 이상한 경우가 자주 발생하므로 기능을 추가함.
+####################################
+# parameter
+# root : 위에 설정한 root
+# checked_csv : result.02_crop_with_fan.ipynb 에서 저장한 csv 이름과 동일하게
+python set_no_first_last_secs.py $root check_pwb.csv
 
 
 ####################################
@@ -20,4 +31,4 @@ python set_no_checked_video.py $root check_pwb.csv
 # parameter
 # root : 위에 설정한 root
 # checked_csv : result.02_crop_with_fan.ipynb 에서 저장한 csv 이름과 동일하게
-python set_yes_checked_video.py $root check_pwb.csv
+#python set_yes_checked_video.py $root check_pwb.csv
