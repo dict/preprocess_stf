@@ -336,6 +336,9 @@ def crop_and_save(path, df_fan, offset_y, margin, clip_dir, callback, verbose=Fa
     meta = reader.__next__()  # meta data, e.g. meta["size"] -> (width, height)
     frame_size = meta['size']
     
+    # 방어코드
+    x1, y1, x2, y2 = max(0, x1), max(0, y1), min(x2, frame_size[0]), min(y2, frame_size[1])
+    
     cropped_pts2ds = []
     for (_, pts2d, _,  frame_idx), f in tqdm(zip(df_fan.values, reader), total=len(df_fan), desc='crop_and_save', disable=not verbose):
         f = np.frombuffer(f, dtype=np.uint8)
