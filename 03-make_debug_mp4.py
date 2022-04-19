@@ -29,9 +29,9 @@ def main(args):
             print(f'{i+1}/{len(ppys)}, {save_path}')
         # front 는 일단 안만든다.
         #if '_1.mov' in name: continue
-        #if Path(save_path).exists():
-        #    print('exist : ', save_path)
-        #    continue
+        if Path(save_path).exists():
+            print('exist : ', save_path)
+            continue
             
         #print(f'{i} : {save_path}')
         meta = ff.video_meta(mp4s[name[:-4]])
