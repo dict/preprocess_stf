@@ -122,7 +122,7 @@ def result02_show_errors(anchors, mp4s, ppys, errors):
         display(df.head())
 
         print('mp4:', mp4s[name[:-4]])
-        show_result.display_video(mp4s[name[:-4]])
+        display_video(mp4s[name[:-4]])
 
         print('name:', name)
         assert(Path(mp4s[name[:-4]]).exists())
