@@ -13,14 +13,14 @@ def main(args):
             continue
 
         d = f"{preprocess_root}/{v['clip']}"
-        print('처음과 마지막 30frame을 no 로 설정되는 비디오:', d)
+        print(f'처음과 마지막 {args.frame_count} frame을 no 로 설정되는 비디오:', d)
 
         jpgs = sorted(glob(d+"/*.jpg"))
-        jpgs = jpgs[:30] + jpgs[-30:]
+        jpgs = jpgs[:args.frame_count] + jpgs[-args.frame_count:]
         for f in jpgs:
-            if 'no' in f:
+            if f.endswith('_no.jpg'):
                 continue
-            f_no = f.replace('yes', 'no')
+            f_no = f.replace('_yes', '_no')
             shutil.move(f, f_no)
         
 
@@ -28,6 +28,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('root', type=str, help='video path root')
     parser.add_argument('checked_csv', type=str, help='checked csv path')
+    parser.add_argument('--frame_count', type=int, default=30, help='checked csv path')
     
     args = parser.parse_args()
     main(args)

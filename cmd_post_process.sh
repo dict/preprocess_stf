@@ -1,5 +1,6 @@
 
 root="/data/home/gomthing/dataset/pwb/mon_front"
+#root="/data/snowyunee/dataset/pwb/pwb_tue_blue"
 
 echo "root : "$root
 
@@ -21,7 +22,8 @@ echo "root : "$root
 # parameter
 # root : 위에 설정한 root
 # checked_csv : result.02_crop_with_fan.ipynb 에서 저장한 csv 이름과 동일하게
-python set_no_first_last_secs.py $root check_pwb.csv
+# --frame_count : no 로 설정할 frame 갯수 (예: 30 이면 앞뒤 30 개씩 총 60개를 no로 만든다.)
+python set_no_first_last_secs.py $root check_pwb_tue_blue_all-start-end.csv --frame_count 30
 
 
 ####################################
