@@ -509,7 +509,9 @@ def save_debug_clip2(clip, fps, verbose=False):
                                                  ffmpeg_log_level='error',
                                                  quality = 10, # 0~10
                                                  output_params=ffmpeg_params,
-                                                 audio_path=audio_path)
+                                                 audio_path=audio_path,
+                                                 macro_block_size=1,
+                                                )
             writer.send(None)  # seed the generator
         writer.send(merged)
     writer.close()
