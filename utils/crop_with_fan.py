@@ -15,7 +15,9 @@ from . import face_finder as ff
 import face_alignment
 import imageio_ffmpeg
 import os
+import pydub
 #from stf.util import callback_inter
+import pdb
 
 
 def callback_inter(callback, min_per=0, max_per=100, desc='', verbose=False):
@@ -205,17 +207,25 @@ def crop(frames, df_fan, offset_y, margin):
     return df_fan, cropped_frames
 
 def save_debug_audio(mp4_path, min_idx, max_idx, audio_path):
-    ac = AudioFileClip(mp4_path)
+    #ac = AudioFileClip(mp4_path)
     meta = ff.video_meta(mp4_path)
     s, e = min_idx/meta['nframes'], (max_idx+1)/meta['nframes']
     s, e = max(0, s), min(1.0, e)
     s, e = s*meta['duration'], e*meta['duration']
-    ac = ac.subclip(s, e)
-    ac.write_audiofile(audio_path, logger=None)
+    #ac = ac.subclip(s, e)
+    #ac.write_audiofile(audio_path, logger=None)
+
+    _, ext = os.path.splitext(mp4_path)
+    sound = pydub.AudioSegment.from_file(mp4_path, ext[1:])
+    sound[s*1000:e*1000].export(audio_path, format='wav')
     
 def save_audio(mp4_path, audio_path):
-    ac = AudioFileClip(mp4_path)
-    ac.write_audiofile(audio_path, logger=None)
+    #ac = AudioFileClip(mp4_path)
+    #ac.write_audiofile(audio_path, logger=None)
+    
+    _, ext = os.path.splitext(mp4_path)
+    sound = pydub.AudioSegment.from_file(mp4_path, ext[1:])
+    sound.export(audio_path, format='wav')
     
     
     
