@@ -2,6 +2,7 @@ import pandas as pd
 from glob import glob
 import shutil
 import argparse
+import os
 
 
 def main(args):
@@ -17,9 +18,9 @@ def main(args):
 
         jpgs = sorted(glob(d+"/*.jpg"))
         for f in jpgs:
-            if 'no' in f:
+            if f.endswith('_no.jpg'):
                 continue
-            f_no = f.replace('yes', 'no')
+            f_no = f.replace('_yes.jpg', '_no.jpg')
             shutil.move(f, f_no)
         
 
