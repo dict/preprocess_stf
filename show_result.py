@@ -12,6 +12,7 @@ from moviepy.editor import ImageSequenceClip
 import os
 import IPython.display as ipd
 import numpy as np
+from PIL import Image
 
 
 def get_writer(out_path, meta):
@@ -149,6 +150,12 @@ def result02_show_review(anchors, mp4s, ppys, errors, check_csv, playbackrate=1.
 
         print(f'{(len(df), i)}/{len(ppys)}: name({name}), cropped_size({cs}px)')
         display_video(clip/'debug.mp4', width=f'width={width}', playbackrate=playbackrate)
+        frames = sorted(glob(f'{str(clip)}/*.jpg'))
+        first, last = Image.open(frames[0]), Image.open(frames[-1])
+        first.thumbnail((256,256))
+        last.thumbnail((256,256))
+        ipd.display(first)
+        ipd.display(last)
         c = input()
         if c == 'q' or c == 'Q' or c == 'ㅂ':
             break
