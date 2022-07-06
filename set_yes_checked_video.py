@@ -8,6 +8,7 @@ def main(args):
     preprocess_root = f'{args.root}/preprocess'
 
     df = pd.read_csv(args.checked_csv)
+    #df = df.query('status == "yes"')
     print('yes 로 설정되는 비디오 개수:', len(df))
     
     for i, v in df.iterrows():
@@ -16,9 +17,9 @@ def main(args):
 
         jpgs = sorted(glob(d+"/*.jpg"))
         for f in jpgs:
-            if 'yes' in f:
+            if f.endswith('_yes.jpg'):
                 continue
-            f_no = f.replace('no', 'yes')
+            f_no = f.replace('_no.jpg', '_yes.jpg')
             shutil.move(f, f_no)
         
 
